@@ -1,11 +1,14 @@
 import React, { Component } from "react";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import "./imc.css";
 
 class Imc extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      altura: 1.7,
+      altura: 170,
       peso: 70,
       imageUrl: "https://i.imgur.com/uhnhOQb.jpg"
     };
@@ -18,26 +21,30 @@ class Imc extends Component {
         <header className="App-header">
           <h1>Índice de Massa Corporal</h1>
           <p />
-          <form>
-            <label>
-              Altura:
-              <input
-                name="altura"
-                type="number"
-                value={this.state.altura}
-                onChange={this.handleInputChange}
-              />
-            </label>
-            <label>
-              Peso:
-              <input
-                name="peso"
-                type="number"
-                value={this.state.peso}
-                onChange={this.handleInputChange}
-              />
-            </label>
-          </form>
+          <Form onChange={e => this.handleInputChange(e)}>
+            <Row>
+              <Col>
+                <Form.Group controlId="altura">
+                  <Form.Label>Altura (cm)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Altura (centímetros)"
+                    defaultValue={this.state.altura}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="peso">
+                  <Form.Label>Peso (kg)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Peso (Kilos)"
+                    defaultValue={this.state.peso}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
           <p />
           <span>Resultado: {this.calcular()}</span>
           <p /> <p />
@@ -48,13 +55,14 @@ class Imc extends Component {
   }
 
   calcular() {
-    return (this.state.peso / (this.state.altura * this.state.altura)).toFixed(
-      2
-    );
+    return (
+      this.state.peso /
+      ((this.state.altura / 100) * (this.state.altura / 100))
+    ).toFixed(2);
   }
 
   handleInputChange(event) {
-    const name = event.target.name;
+    const name = event.target.id;
     const value = event.target.value;
     this.setState({ [name]: value });
   }
