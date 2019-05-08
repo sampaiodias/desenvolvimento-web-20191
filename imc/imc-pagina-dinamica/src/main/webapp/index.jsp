@@ -9,10 +9,11 @@
   </head>
 
   <body>
-    <div class="modal-dialog">
+    <br>
+    <div class="modal-dialog" align="center">
         <div class="modal-content">
             <div class="panel-heading">
-              <h3 class="panel-title">Indice de Massa Corporal</h3>
+              <h2>Indice de Massa Corporal</h2>
             </div>
             <div class="panel-body">
             <form>
@@ -28,17 +29,36 @@
             </form>
         </div>
     </div>
-    <!-- Scriptlet. Codigo Java no HTML. -->
-    <%
-      String alturaStr = request.getParameter("altura");
-      String pesoStr = request.getParameter("peso");
-      if (alturaStr != null && pesoStr != null) {
-         float altura = Float.parseFloat(alturaStr);
-         float peso = Float.parseFloat(pesoStr);
-         double imc = peso / ((altura / 100) * (altura / 100));
-         out.print(String.format("%.2f",imc));
-      }
-    %>
+    <br>
+    <div class="panel-title" align="center">
+      <h3>
+      <!-- Scriptlet. Codigo Java no HTML. -->
+      <%
+        String alturaStr = request.getParameter("altura");
+        String pesoStr = request.getParameter("peso");
+        if (alturaStr != null && pesoStr != null) {
+          float altura = Float.parseFloat(alturaStr);
+          float peso = Float.parseFloat(pesoStr);
+          double imc = peso / ((altura / 100) * (altura / 100));
+          out.print(String.format("%.2f",imc));
+          if (imc < 18.5)
+            out.print(" (Abaixo do Peso)");
+          else if (imc < 24.9)
+            out.print(" (Peso Normal)");
+          else if (imc < 29.9)
+            out.print(" (Sobrepeso)");
+          else if (imc < 34.9)
+            out.print(" (Sobrepeso)");
+          else if (imc < 39.9)
+            out.print(" (Sobrepeso)");
+          else
+            out.print(" (Sobrepeso)");
+        }
+      %>
+      </h3>
+      <br><br>
+      <img src="https://i.imgur.com/uhnhOQb.jpg" alt="" />
+    </div>
     <br>
   </body>
 
